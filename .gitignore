@@ -2,3 +2,5 @@ db.splite3
 __pycache__
 *.pyc
 db.splite3
+geckodriver.log
+.idea
