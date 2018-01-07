@@ -41,9 +41,13 @@ class NewVisitorTest(unittest.TestCase):
         # 伊迪丝的爱好是使用假蝇做鱼饵钓鱼
         inputbox.send_keys('Buy peacock feathers')
 
+        import time
+        time.sleep(2)
         # 她按回车键后，页面更新了
         # 待办事项表格中显示了“1: Buy peacock feathers”
         inputbox.send_keys(Keys.ENTER)
+
+        time.sleep(2)
         self.check_for_row_in_list_table('1: Buy peacock feathers')
 
         # 页面中又显示了一个文本框，可以输入其他的待办事项
