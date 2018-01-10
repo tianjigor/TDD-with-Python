@@ -84,10 +84,12 @@ class NewVisitorTest(LiveServerTestCase):
         # 他不像伊迪丝那样兴趣盎然
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
+        time.sleep(1)
         inputbox.send_keys(Keys.ENTER)
 
         # 弗朗西斯获得了他的唯一URL
         francis_list_url = self.browser.current_url
+        print(francis_list_url)
         self.assertRegex(francis_list_url, '/lists/.+')
         self.assertNotEqual(francis_list_url, edith_list_url)
 
