@@ -87,6 +87,7 @@ class NewVisitorTest(LiveServerTestCase):
         time.sleep(1)
         inputbox.send_keys(Keys.ENTER)
 
+        time.sleep(1)
         # 弗朗西斯获得了他的唯一URL
         francis_list_url = self.browser.current_url
         print(francis_list_url)

@@ -5,7 +5,6 @@ from django.http import HttpResponse
 
 
 def home_page(request):
-    print('test')
     return render(request, 'home.html')
 
 
