@@ -19,7 +19,7 @@ class ItemValidationTest(FunctionalTest):
         # 她输入一些文字，然后再次提交，这次没问题了
         self.browser.find_element_by_id('id_new_item').send_keys('Buy milk')
         self.browser.find_element_by_id('id_new_item').send_keys(Keys.ENTER)
-        time.sleep(1)
+        time.sleep(3)
         self.check_for_row_in_list_table('1: Buy milk')
         # 她有点儿调皮，又提交了一个空待办事项
         self.browser.find_element_by_id('id_new_item').send_keys(Keys.ENTER)
