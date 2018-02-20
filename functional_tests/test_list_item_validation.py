@@ -6,6 +6,7 @@ import time
 
 class ItemValidationTest(FunctionalTest):
 
+    @skip
     def test_cannot_add_empty_list_items(self):
         # 伊迪丝访问首页，不小心提交了一个空待办事项
         # 输入框中没输入内容，她就按下了回车键
@@ -42,6 +43,8 @@ class ItemValidationTest(FunctionalTest):
         time.sleep(1)
         self.check_for_row_in_list_table('1: Buy milk')
         self.check_for_row_in_list_table('2: Make tea')
+
+    @skip
     def test_cannot_add_duplicate_items(self):
 
         # 伊迪丝访问首页，新建一个清单
@@ -61,3 +64,19 @@ class ItemValidationTest(FunctionalTest):
         error = self.get_error_element()
         self.assertEqual(error.text, "You've already got this in your list")
 
+    def test_error_messages_are_cleared_on_input(self):
+
+        # 伊迪丝新建一个清单，但方法不当，所以出现了一个验证错误
+        self.browser.get(self.live_server_url)
+        self.get_item_input_box().send_keys(' ')
+        time.sleep(1)
+        self.get_item_input_box().send_keys(Keys.ENTER)
+        error = self.get_error_element()
+        self.assertTrue(error.is_displayed())
+
+        # 为了消除错误，她开始在输入框中输入内容
+        self.get_item_input_box().send_keys('a')
+
+        # 看到错误消息消失了，她很高兴
+        error = self.get_error_element()
+        self.assertFalse(error.is_displayed())
