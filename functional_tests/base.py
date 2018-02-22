@@ -1,16 +1,26 @@
 #-*- coding:utf-8 -*-
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from django.test import LiveServerTestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from unittest import skip
+from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
+import sys
+import time
+
+MAX_WAIT = 10
 
 class FunctionalTest(StaticLiveServerTestCase):
 
 
+    @classmethod
+    def setUpClass(cls):
+        for arg in sys.argv:
+            if 'liveserver' in arg:
+                cls.server_url = 'http://' + arg.split('=')[1]
+                return
+        super().setUpClass()
+        cls.server_url = cls.live_server_url
+
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(3)
 
     def tearDown(self):
         pass
@@ -26,3 +36,13 @@ class FunctionalTest(StaticLiveServerTestCase):
 
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn(row_text, [row.text for row in rows])
+
+    def wait_for(self, fn):
+        start_time = time.time()
+        while True:
+            try:
+                return fn()
+            except (AssertionError, WebDriverException) as e:
+                if time.time() - start_time > MAX_WAIT:
+                    raise e
+                time.sleep(0.5)
