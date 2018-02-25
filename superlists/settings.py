@@ -126,3 +126,12 @@ AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = [
     'accounts.authentication.PasswordlessAuthenticationBackend',
 ]
+
+
+
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'xxx@qq.com'
+EMAIL_HOST_PASSWORD = ''
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
